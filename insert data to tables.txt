@@ -1,0 +1,20 @@
+from sqlalchemy import create_engine
+import pandas as pd
+
+# create a database connection
+engine = create_engine('mysql+pymysql://root:IBMIBM123@localhost:3306/phonepe_database')
+
+# load data into a DataFrame
+data0 = pd.read_csv('transaction_df.csv')
+data = pd.read_csv('user_by_device.csv')
+data1 = pd.read_csv('district_map_transaction.csv')
+data2 = pd.read_csv('district_registering_map.csv')
+data3 = pd.read_csv('Longitude_Latitude_State_Table.csv')
+data4 = pd.read_csv('Data_Map_Districts_Longitude_Latitude.csv')
+# insert the data into the SQL table
+data0.to_sql('agg_transaction_table', con=engine, if_exists='replace', index=False)
+data.to_sql('agg_userbydevice_table', con=engine, if_exists='replace', index=False)
+data1.to_sql('district_map_transaction_table', con=engine, if_exists='replace', index=False)
+data2.to_sql('district_map_registering_table', con=engine, if_exists='replace', index=False)
+data3.to_sql('longitude_latitude_state_table', con=engine, if_exists='replace', index=False)
+data4.to_sql('districts_longitude_latitude_table', con=engine, if_exists='replace', index=False)
